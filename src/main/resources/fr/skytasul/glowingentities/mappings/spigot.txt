@@ -1133,3 +1133,57 @@ net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
 net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
 net.minecraft.world.level.Level -> net.minecraft.world.level.World:
 net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.PacketPlayOutScoreboardTeam$b:
+# reflection-remapper | 26.2.0
+net.minecraft.core.registries.BuiltInRegistries -> net.minecraft.core.registries.BuiltInRegistries:
+    ENTITY_TYPE -> ENTITY_TYPE
+net.minecraft.world.entity.EntityType -> net.minecraft.world.entity.EntityType:
+net.minecraft.network.Connection -> net.minecraft.network.Connection:
+    channel -> channel
+net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket -> net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket:
+net.minecraft.server.network.ServerCommonPacketListenerImpl -> net.minecraft.server.network.ServerCommonPacketListenerImpl:
+    connection -> connection
+    send(net.minecraft.network.protocol.Packet) -> send
+net.minecraft.network.syncher.SynchedEntityData$DataValue -> net.minecraft.network.syncher.SynchedEntityData$DataValue:
+    create(net.minecraft.network.syncher.EntityDataAccessor,java.lang.Object) -> create
+    id() -> id
+    serializer() -> serializer
+    value() -> value
+net.minecraft.core.Registry -> net.minecraft.core.Registry:
+    getValue(net.minecraft.resources.Identifier) -> getValue
+net.minecraft.server.level.ServerPlayer -> net.minecraft.server.level.ServerPlayer:
+    connection -> connection
+net.minecraft.world.scores.Team$CollisionRule -> net.minecraft.world.scores.Team$CollisionRule:
+    NEVER -> NEVER
+net.minecraft.resources.Identifier -> net.minecraft.resources.Identifier:
+    withDefaultNamespace(java.lang.String) -> withDefaultNamespace
+net.minecraft.network.syncher.EntityDataSerializer -> net.minecraft.network.syncher.EntityDataSerializer:
+    createAccessor(int) -> createAccessor
+net.minecraft.network.syncher.SynchedEntityData$Builder -> net.minecraft.network.syncher.SynchedEntityData$Builder:
+    itemsById -> itemsById
+    build() -> build
+net.minecraft.network.syncher.SyncedDataHolder -> net.minecraft.network.syncher.SyncedDataHolder:
+net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket -> net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket:
+net.minecraft.world.scores.PlayerTeam -> net.minecraft.world.scores.PlayerTeam:
+    setCollisionRule(net.minecraft.world.scores.Team$CollisionRule) -> setCollisionRule
+    setColor(java.util.Optional) -> setColor
+net.minecraft.network.syncher.EntityDataAccessor -> net.minecraft.network.syncher.EntityDataAccessor:
+net.minecraft.network.protocol.game.ClientboundAddEntityPacket -> net.minecraft.network.protocol.game.ClientboundAddEntityPacket:
+net.minecraft.network.protocol.BundlePacket -> net.minecraft.network.protocol.BundlePacket:
+    subPackets() -> subPackets
+net.minecraft.network.syncher.SynchedEntityData -> net.minecraft.network.syncher.SynchedEntityData:
+    get(net.minecraft.network.syncher.EntityDataAccessor) -> get
+net.minecraft.world.scores.Scoreboard -> net.minecraft.world.scores.Scoreboard:
+net.minecraft.network.syncher.SynchedEntityData$DataItem -> net.minecraft.network.syncher.SynchedEntityData$DataItem:
+net.minecraft.world.entity.Entity -> net.minecraft.world.entity.Entity:
+    DATA_SHARED_FLAGS_ID -> DATA_SHARED_FLAGS_ID
+    getEntityData() -> getEntityData
+net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket -> net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket:
+    id -> id
+    packedItems -> packedItems
+net.minecraft.world.phys.Vec3 -> net.minecraft.world.phys.Vec3:
+net.minecraft.world.entity.Marker -> net.minecraft.world.entity.Marker:
+net.minecraft.world.scores.TeamColor -> net.minecraft.world.scores.TeamColor:
+    byName(java.lang.String) -> byName
+net.minecraft.network.protocol.Packet -> net.minecraft.network.protocol.Packet:
+net.minecraft.world.level.Level -> net.minecraft.world.level.Level:
+net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters -> net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$Parameters:

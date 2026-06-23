@@ -533,7 +533,7 @@ public class GlowingEntities implements Listener {
 			ClassAccessor scoreboardClass = getNMSClass(reflection, "world.scores", "Scoreboard");
 			ClassAccessor teamClass = getNMSClass(reflection, "world.scores", "PlayerTeam");
 			ClassAccessor pushClass = getNMSClass(reflection, "world.scores", "Team$CollisionRule");
-			ClassAccessor colorClass = version.isAfter(26, 1, 0)
+			ClassAccessor colorClass = version.isAfter(26, 2, 0)
 					? getNMSClass(reflection, "world.scores", "TeamColor")
 					: getNMSClass(reflection, "ChatFormatting");
 
@@ -547,7 +547,7 @@ public class GlowingEntities implements Listener {
 			pushNever = pushClass.getField("NEVER").get(null);
 			setTeamPush = teamClass.getMethodInstance("setCollisionRule", pushClass);
 
-			if (version.isAfter(26, 1, 0)) {
+			if (version.isAfter(26, 2, 0)) {
 				setTeamColor = teamClass.getMethodInstance("setColor", Optional.class);
 				getColorConstant = colorClass.getMethodInstance("byName", String.class);
 			} else {
@@ -583,10 +583,14 @@ public class GlowingEntities implements Listener {
 							.getConstructorInstance(int[].class);
 		}
 
-		private static Object getEntityType(@NotNull ReflectionAccessor reflection, @NotNull Version version,
-				@NotNull ClassAccessor entityTypesClass, @NotNull String fieldName, @NotNull String registryName)
-				throws ReflectiveOperationException {
-			if (!version.isAfter(26, 1, 0))
+		private static Object getEntityType(
+				@NotNull ReflectionAccessor reflection,
+				@NotNull Version version,
+				@NotNull ClassAccessor entityTypesClass,
+				@NotNull String fieldName,
+				@NotNull String registryName
+		) throws ReflectiveOperationException {
+			if (!version.isAfter(26, 2, 0))
 				return entityTypesClass.getField(fieldName).get(null);
 
 			var builtInRegistriesClass = getNMSClass(reflection, "core.registries", "BuiltInRegistries");
@@ -879,7 +883,7 @@ public class GlowingEntities implements Listener {
 				Object team = createTeam.newInstance(scoreboardDummy, id);
 				setTeamPush.invoke(team, pushNever);
 
-				if (version.isAfter(26, 1, 0)) {
+				if (version.isAfter(26, 2, 0)) {
 					setTeamColor.invoke(team, Optional.of(getColorConstant.invoke(null, color.name().toLowerCase(Locale.ROOT))));
 				} else {
 					setTeamColor.invoke(team, getColorConstant.invoke(null, color.getChar()));

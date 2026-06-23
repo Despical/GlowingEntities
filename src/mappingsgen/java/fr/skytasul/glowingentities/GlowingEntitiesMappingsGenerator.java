@@ -1,14 +1,8 @@
 package fr.skytasul.glowingentities;
 
 import fr.skytasul.reflection.Version;
-import fr.skytasul.reflection.mappings.Mappings;
-import fr.skytasul.reflection.mappings.RealMappings;
-import fr.skytasul.reflection.mappings.RealMappings.RealClassMapping;
-import fr.skytasul.reflection.mappings.RealMappings.RealClassMapping.RealFieldMapping;
-import fr.skytasul.reflection.mappings.RealMappings.RealClassMapping.RealMethodMapping;
 import fr.skytasul.reflection.mappings.files.ProguardMapping;
 import fr.skytasul.reflection.shrieker.CustomMappings;
-import fr.skytasul.reflection.shrieker.FakeReflectionAccessor;
 import fr.skytasul.reflection.shrieker.MappingsShrieker;
 import fr.skytasul.reflection.shrieker.PipeMappings;
 import fr.skytasul.reflection.shrieker.minecraft.MinecraftMappingsProvider;
@@ -16,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class GlowingEntitiesMappingsGenerator {
@@ -39,15 +32,8 @@ public class GlowingEntitiesMappingsGenerator {
 				"1.18", "1.18.1", "1.18.2",
 				"1.19", "1.19.1", "1.19.2", "1.19.3", "1.19.4",
 				"1.20.1", "1.20.2", "1.20.4", "1.20.6",
-				"1.21", "1.21.1", "1.21.3", "1.21.4", "1.21.5", "1.21.6", "1.21.7", "1.21.8", "1.21.9", "1.21.10", "1.21.11",
-				"26.2")) {
+				"1.21", "1.21.1", "1.21.3", "1.21.4", "1.21.5", "1.21.6", "1.21.7", "1.21.8", "1.21.9", "1.21.10", "1.21.11")) {
 			try {
-				if (version.is(26, 2, 0)) {
-					LOGGER.info("Generating transparent mappings for " + version + "...");
-					spigotShrieker.registerVersionMappings(version, createTransparentMappings(version));
-					continue;
-				}
-
 				LOGGER.info("Downloading mappings for " + version + "...");
 				var minecraftMappings = mappingsProvider.loadMinecraftMappings(version);
 				var spigotMappings = new CustomMappings(mappingsProvider.loadSpigotMappings(version));
@@ -64,26 +50,6 @@ public class GlowingEntitiesMappingsGenerator {
 		Files.createDirectories(dataFolder);
 		spigotShrieker.writeMappingsFile(dataFolder.resolve("spigot.txt"));
 		LOGGER.info("\nDone.");
-	}
-
-	private Mappings createTransparentMappings(@NotNull Version version) throws ReflectiveOperationException {
-		var fakeReflection = new FakeReflectionAccessor();
-		GlowingEntities.Packets.loadReflection(fakeReflection, version);
-
-		var classes = new ArrayList<>();
-
-		for (var fakeClass : fakeReflection.classes()) {
-			var fields = fakeClass.fields().stream()
-					.map(field -> new RealFieldMapping(field.name(), field.name()))
-					.toList();
-			var methods = fakeClass.methods().stream()
-					.map(method -> new RealMethodMapping(method.name(), method.name(), method.parameterTypes()))
-					.toList();
-
-			classes.add(new RealClassMapping(fakeClass.name(), fakeClass.name(), fields, methods));
-		}
-
-		return new RealMappings(classes);
 	}
 
 	public static void main(String[] args) throws MappingGenerationException, IOException {
